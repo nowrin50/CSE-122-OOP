@@ -1,0 +1,111 @@
+This is a C++ program that demonstrates the use of inheritance and polymorphism in object-oriented programming. 
+It defines a Publication class, which has a title and price, and two derived classes, Book and Tape, which add 
+a page count and playing time in minutes, respectively.
+
+Let's go through each line of the code and understand what it does:
+#include <iostream>
+#include <string>
+using namespace std;
+
+This line includes the necessary header files for input/output and string handling.
+
+class Publication {
+private:
+    string title;
+    float price;
+public:
+    Publication() : title(""), price(0.0) {}
+    Publication(string t, float p) : title(t), price(p) {}
+    void getData() {
+        cout << "Enter title: ";
+        getline(cin, title);
+        cout << "Enter price: ";
+        cin >> price;
+        cin.ignore(); // consume newline
+    }
+    void putData() const {
+        cout << "Title: " << title << endl;
+        cout << "Price: " << price << endl;
+    }
+};
+
+This is the Publication class declaration. It has two private data members, title 
+and price, and two constructors - a default constructor that initializes the data 
+members to their default values, and a parameterized constructor that initializes 
+them with given values. The class also has two member functions, getData() and putData(),
+ that respectively get input from the user and output the object's data.
+
+class Book : public Publication {
+private:
+    int pageCount;
+public:
+    Book() : Publication(), pageCount(0) {}
+    Book(string t, float p, int pc) : Publication(t, p), pageCount(pc) {}
+    void getData() {
+        Publication::getData();
+        cout << "Enter page count: ";
+        cin >> pageCount;
+        cin.ignore(); // consume newline
+    }
+    void putData() const {
+        Publication::putData();
+        cout << "Page count: " << pageCount << endl;
+    }
+};
+
+This is the Book class declaration, which inherits from the Publication class using the public keyword.
+ It has a private data member, pageCount, and two constructors - a default constructor that initializes
+ the pageCount to 0, and a parameterized constructor that initializes it with a given value. The class also
+ has two member functions, getData() and putData(), that respectively get input from the user and output the
+ object's data, and call the corresponding functions in the base class using the scope resolution operator.
+
+class Tape : public Publication {
+private:
+    float playingTime;
+public:
+    Tape() : Publication(), playingTime(0.0) {}
+    Tape(string t, float p, float pt) : Publication(t, p), playingTime(pt) {}
+    void getData() {
+        Publication::getData();
+        cout << "Enter playing time (minutes): ";
+        cin >> playingTime;
+        cin.ignore(); // consume newline
+    }
+    void putData() const {
+        Publication::putData();
+        cout << "Playing time (minutes): " << playingTime << endl;
+    }
+};
+
+This is the Tape class declaration, which also inherits from the Publication class using the public keyword.
+ It has a private data member, playingTime, and two constructors - a default constructor that initializes the playingTime
+ to 0, and a parameterized constructor that initializes it with a given value. The class also has two member functions,
+ getData() and putData(), that respectively get input from the user and output the object's data, and call the corresponding
+ functions in the base class using the scope resolution operator.
+
+int main() {
+    Book b;
+    Tape t;
+    b.getData();
+    t.getData();
+    cout << endl <<
+
+The main function is where the Book and Tape classes are instantiated and their methods are called to get and display data.
+ First, two objects are created: Book b and Tape t. These objects are instances of the Book and Tape classes respectively. 
+Then, the getData method is called on the Book object b. This method prompts the user to enter the title, price, and page count
+ of the book, and stores these values in the b object. Similarly, the getData method is called on the Tape object t. This method
+ prompts the user to enter the title, price, and playing time of the tape, and stores these values in the t object. After getting
+ data for both objects, the putData method is called on the Book object b. This method displays the title, price, and page count of 
+the book. Then, the putData method is called on the Tape object t. This method displays the title, price, and playing time of the tape. 
+Finally, the program returns 0 to indicate that it has run successfully.
+
+*** why cin.ignore(); in the code?
+In the code, cin.ignore(); is used to clear the input buffer before calling getline() function.
+
+When we read input using cin for example cin >> variable, the input buffer may contain newline characters (i.e., '\n') that were left 
+there by the previous input operation. These newline characters are still in the input buffer and can be read by the next input operation,
+ even if it's not intended.
+
+In the code, after reading input using cin >> for pageCount and playTime, we use cin.ignore() to remove any leftover newline character(s)
+ from the input buffer, so that the subsequent getline() call does not read any unintended input. If we didn't do this, the getline() call
+ would be skipped because it would immediately read the newline character left in the buffer by the previous input operation

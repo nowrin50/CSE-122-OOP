@@ -1,0 +1,127 @@
+
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+This is the usual header and namespace declaration for C++ programs.
+
+class Fraction {
+  private:
+    int numerator, denominator;
+
+  public:
+    Fraction(int num, int denom) {
+      if (denom == 0) {
+        cout << "Error: Denominator cannot be zero" << endl;
+        exit(1);
+      }
+      numerator = num;
+      denominator = denom;
+    }
+
+This is the declaration of the Fraction class.
+ It has two private member variables numerator
+ and denominator, and one public constructor 
+that takes two integers as input, representing
+ the numerator and denominator of the fraction.
+ The constructor first checks if the denominator
+ is zero, which is not allowed in a fraction, and
+ prints an error message if it is. Then, it 
+initializes the numerator and denominator 
+member variables of the class.
+
+    void reduce() {
+      int gcd = findGCD(numerator, denominator);
+      numerator /= gcd;
+      denominator /= gcd;
+    }
+
+This is a public method that reduces the fraction to its lowest terms.
+ It uses the findGCD method to find the greatest common divisor of the
+ numerator and denominator, then divides both by this number to simplify the fraction.
+
+    string str() const {
+      string s = to_string(numerator) + "/" + to_string(denominator);
+      return s;
+    }
+
+This is a public method that returns the fraction as a string in 
+the format "numerator/denominator". It uses the to_string function 
+to convert the numerator and denominator to strings and concatenate
+ them with a "/" character.
+
+    string repr() const {
+      string s = "Fraction(" + to_string(numerator) + ", " + to_string(denominator) + ")";
+      return s;
+    }
+
+This is a public method that returns the representation of the fraction
+ as a string that can be used to recreate the fraction object. It uses
+ the to_string function to convert the numerator and denominator to strings
+ and concatenates them with the "Fraction(" and ")" strings.
+
+    Fraction operator+(const Fraction& other) const {
+      int num = numerator * other.denominator + other.numerator * denominator;
+      int denom = denominator * other.denominator;
+      Fraction result(num, denom);
+      result.reduce();
+      return result;
+    }
+
+This is an overloaded operator for addition, allowing two Fraction objects
+ to be added together using the + operator. It takes another Fraction object 
+as input and returns a new Fraction object representing the sum of the two 
+fractions. It first computes the numerator and denominator of the resulting 
+fraction using the formula for adding fractions, then creates a new Fraction
+ object with these values and simplifies it using the reduce method before returning it.
+
+  private:
+    int findGCD(int a, int b) const {
+      if (b == 0) {
+        return a;
+      }
+      return findGCD(b, a % b);
+    }
+};
+
+This is a private method that finds the greatest common divisor (GCD) of two
+ integers using Euclid's algorithm. The findGCD function is a private helper 
+function defined inside the Fraction class. It calculates the greatest common
+ divisor (GCD) of two integer values a and b. The function takes two integer
+ parameters a and b, and returns the GCD of a and b. The function is implemented
+ using a recursive algorithm based on the Euclidean algorithm. The base case of 
+the recursion is when b is equal to 0, in which case the function returns a as
+ the GCD. Otherwise, the function calls itself recursively with the arguments 
+b and a % b, which is the remainder of a divided by b. This continues until 
+the base case is reached, at which point the final GCD is returned. The findGCD
+ function is used inside the reduce function to simplify the fraction by 
+dividing both the numerator and the denominator by their GCD.
+
+int main() {
+  Fraction f1(3, 4);
+  Fraction f2(1, 2);
+  Fraction f3 = f1 + f2;
+  cout << f1.str() << " + " << f2.str() << " = " << f3.str() << endl;
+  cout << f3.repr() << endl;
+  return 0;
+}
+
+The main function creates three Fraction objects: f1, f2, and f3. f1 is 
+created using the constructor with numerator 3 and denominator 4, and f2 
+is created using the constructor with numerator 1 and denominator 2. f3 
+is created by adding f1 and f2 using the + operator. This calls the 
+operator+ method of the Fraction class, which takes other as an 
+argument (in this case, other is f2). The method returns a new 
+Fraction object, which is assigned to f3. After that, the program
+ prints out a message to the console with the sum of f1 and f2, 
+and the result is stored in f3. The str method is called on each
+ of f1, f2, and f3 to print their string representations, separated
+ by + and = signs. Finally, the program prints out the repr string 
+of f3, which is the string that can be used to recreate f3 using 
+eval(). The repr method returns a string that has the format 
+Fraction(numerator, denominator)
+
+
+

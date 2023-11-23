@@ -1,4 +1,4 @@
-# CSE-122-Spring-2023-50-06-
+CSE 122 C OOPS
 This is an OOP lab repository
 
 Name: Ferdouse Hassan Nowrin

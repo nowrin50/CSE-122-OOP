@@ -5,8 +5,6 @@ Name: Ferdouse Hassan Nowrin
 
 Student ID: 22234103237
 
-Email: ferdousehasan574@gmail.com
-
 Intake: 50
 
-Section: 06
+Section: 07
